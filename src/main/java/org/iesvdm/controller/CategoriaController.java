@@ -1,5 +1,7 @@
 package org.iesvdm.controller;
 
+import java.util.List;
+
 import org.iesvdm.domain.Categoria;
 import org.iesvdm.dto.CategoriaDTO;
 import org.iesvdm.service.CategoriaService;
@@ -23,9 +25,10 @@ public class CategoriaController {
 		
 		//Categoria categoria = categoriaService.one(id);
 		CategoriaDTO categoriaDTO = categoriaService.oneDTO(id);
+		List<Integer> totalAlmacen = categoriaService.totalPorAlmacen(id);
 		
 		model.addAttribute("categoriaDTO", categoriaDTO);
-		model.addAttribute("prueba", "pruebaxx");
+		model.addAttribute("totalAlmacen", totalAlmacen);
 		return "detalle-categoria";
 	}
 	

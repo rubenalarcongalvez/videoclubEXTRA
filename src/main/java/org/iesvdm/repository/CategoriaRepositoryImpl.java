@@ -55,5 +55,19 @@ public class CategoriaRepositoryImpl implements CategoriaRepository{
 		return listaCategoria;
 	}
 	
+	@SuppressWarnings("removal")
+	@Override
+	public List<Integer> totalPeliculasPorAlmacen(long id_categoria) {
+		
+		List<Integer> listTotalPelis = jdbcTemplate.query( // Ejecutamos directamente la row que nos devuelve la lista
+                "select count(pc.id_pelicula) as total from categoria c inner join pelicula_categoria pc on c.id_categoria = pc.id_categoria inner join inventario i on pc.id_pelicula = i.id_pelicula inner join almacen a on a.id_almacen = i.id_almacen where c.id_categoria = ? group by a.id_almacen order by a.id_almacen",
+                (rs, rowNum) -> new Integer(rs.getInt("total")
+                						 	), id_categoria
+        );
+
+		return listTotalPelis;
+		
+	}
+	
 	
 }
